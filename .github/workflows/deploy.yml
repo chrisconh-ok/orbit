@@ -1,43 +1,45 @@
 name: Deploy to Production server
 on:
-  push:
-    branches: [ main ]
+    push:
+        branches: [main]
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+    contents: read
+    pages: write
+    id-token: write
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout your repository using git
-        uses: actions/checkout@v4
-      - name: Install, build, and upload your site
-        uses: withastro/action@v2
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: astro-build
-          path: ./dist
-          
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: astro-build
-      - name: Deploy SSH rsync Action
-        uses: chrisconh-ok/deploy-ssh-rsync-action@1.0 
-        with:
-          REMOTE_HOST: ${{ secrets.FTP_SERVER }}
-          REMOTE_PORT: ${{ secrets.FTP_PORT }}
-          REMOTE_USER: ${{ secrets.FTP_USERNAME }}
-          REMOTE_SSH_KEY: ${{ secrets.FTP_SSHKEY }}
-          REMOTE_SSH_KEY_PASS: ${{ secrets.FTP_SSHKPASS }}
-          REMOTE_PATH: ${{ secrets.FTP_PATH }}
-          LOCAL_PATH: /
-          RSYNC_OPTIONS: -rvaz --delete
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout your repository using git
+              uses: actions/checkout@v4
+            - name: Install, build, and upload your site
+              uses: withastro/action@v2
+              with:
+                  package-manager: pnpm@latest
+            - name: Upload build artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                  name: astro-build
+                  path: ./dist
+
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Download build artifacts
+              uses: actions/download-artifact@v3
+              with:
+                  name: astro-build
+            - name: Deploy SSH rsync Action
+              uses: chrisconh-ok/deploy-ssh-rsync-action@1.0
+              with:
+                  REMOTE_HOST: ${{ secrets.FTP_SERVER }}
+                  REMOTE_PORT: ${{ secrets.FTP_PORT }}
+                  REMOTE_USER: ${{ secrets.FTP_USERNAME }}
+                  REMOTE_SSH_KEY: ${{ secrets.FTP_SSHKEY }}
+                  REMOTE_SSH_KEY_PASS: ${{ secrets.FTP_SSHKPASS }}
+                  REMOTE_PATH: ${{ secrets.FTP_PATH }}
+                  LOCAL_PATH: /
+                  RSYNC_OPTIONS: -rvaz --delete
