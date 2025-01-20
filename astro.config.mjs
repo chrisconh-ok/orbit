@@ -11,6 +11,6 @@ import mdx from '@astrojs/mdx'
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://orbit.techloopcorp.com/',
+	site: 'https://orbitbrackets.com/',
 	integrations: [tailwind(), icon(), sitemap(), mdx()]
 })
