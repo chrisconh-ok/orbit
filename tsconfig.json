@@ -6,11 +6,12 @@
     "strictNullChecks": true,
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*.astro"],
-      "@layouts/*": ["src/layouts/*.astro"],
+      "@/*": ["src/*"],
+      "@features/*": ["src/features/*.astro"],
+      "@components/*": ["src/shared/components/*.astro"],
+      "@layouts/*": ["src/shared/layouts/*.astro"],
       "@pages/*": ["src/pages/*.astro"],
       "@styles/*": ["src/styles/*.css"],
-      "@content/*": ["src/content/*"]
     }
   }
 }

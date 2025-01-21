@@ -1,6 +1,7 @@
 ---
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts.ts'
-import BaseHead from '../components/BaseHead.astro'
+import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts.ts'
+import BaseHead from '@layouts/MainLayout/partials/BaseHead'
+import Navbar from '@components/Navbar/Navbar'
 
 export interface Props {
 	title?: string
@@ -17,6 +18,9 @@ const { bodyClass = '', title = SITE_TITLE, description = SITE_DESCRIPTION } = A
 		<BaseHead title={title} description={description} />
 	</head>
 	<body class={bodyClass}>
+		<Navbar />
 		<slot />
+		<script is:inline src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"
+		></script>
 	</body>
 </html>

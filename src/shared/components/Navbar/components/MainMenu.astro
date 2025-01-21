@@ -1,0 +1,31 @@
+---
+const currentPath = Astro.url.pathname
+
+const links = [
+	{ name: 'Inicio', href: '/' },
+	{ name: 'Enlaces', href: '/enlaces' },
+	{ name: 'Acerca de', href: '/acerca-de' }
+]
+---
+
+<ul
+	class="mt-8 flex flex-col rounded-lg border border-zinc-700 bg-brand-dark p-4 font-medium md:mt-0
+		md:flex-row md:space-x-8 md:border-0 md:bg-brand-dark md:p-0 rtl:space-x-reverse"
+>
+	{
+		links.map((link) => (
+			<li>
+				<a
+					href={link.href}
+					class={`block rounded px-3 py-2 my-2 ${
+						currentPath === link.href
+							? 'text-brand-primary font-bold'
+							: 'text-white hover:bg-transparent hover:text-brand-primary'
+						}`}
+				>
+					{link.name}
+				</a>
+			</li>
+		))
+	}
+</ul>

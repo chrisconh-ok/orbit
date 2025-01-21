@@ -1,0 +1,1 @@
+// Lógica específica (fetch, utils, etc.)
