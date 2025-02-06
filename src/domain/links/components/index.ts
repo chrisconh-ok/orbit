@@ -1,0 +1,5 @@
+export { default as LinksFeatures } from './LinksFeatures.astro'
+export { default as LinksFooter } from './LinksFooter.astro'
+export { default as LinksHero } from './LinksHero.astro'
+export { default as SliderPosts } from './SliderPosts.astro'
+export { default as SliderResources } from './SliderPosts.astro'

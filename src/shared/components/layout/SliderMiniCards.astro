@@ -1,0 +1,16 @@
+---
+interface Props {
+    /** Optional additional CSS classes */
+    class?: string;
+}
+
+const { class: className = ''} = Astro.props;
+
+const baseStyles = 'lg:grid lg:gap-6 lg:grid-cols-4 flex overflow-x-auto gap-4 snap-x snap-mandatory -mx-4 px-4';
+---
+<div class:list={[
+    baseStyles,
+    className
+]}>
+    <slot />
+</div>

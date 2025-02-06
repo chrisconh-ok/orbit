@@ -1,0 +1,23 @@
+---
+import { Tag, Headline } from '@shared/components/ui'
+
+interface Props {
+    tags: string[];
+    tagCount: Record<string, number>;
+}
+
+const { tags, tagCount } = Astro.props;
+---
+
+<div class="max-w-screen-xl mx-auto mb-12">
+    <div class="p-6 bg-theme-cardBackground border-gray-200 rounded-lg shadow">
+        <Headline type="h2" textSize="xl" mdTextSize="xl" class="mb-4">Explorar por temas</Headline>
+        <div class="flex flex-wrap gap-2">
+            {
+                tags.map((tag) => (
+                    <Tag href={`/blog/tag/${tag}`} title={tag} quantity={tagCount[tag]}>{tag}</Tag>
+                ))
+            }
+        </div>
+    </div>
+</div>

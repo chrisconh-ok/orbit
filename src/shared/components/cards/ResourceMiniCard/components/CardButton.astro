@@ -1,0 +1,29 @@
+---
+import { Button } from '@shared/components/ui';
+
+interface Props {
+    /** The date from resource */
+    slug: string;
+    fileSize: string;
+    downloadUrl: string;
+}
+
+const { slug, fileSize, downloadUrl } = Astro.props;
+---
+<div class="flex justify-between">
+    <Button
+        text="Ver recurso"
+        type="link"
+        href={`/resources/${slug}`}
+        icon="mdi:arrow-right-thick"
+        iconPosition="right"
+    />
+    
+    <Button
+        text={'Descargar '+fileSize}
+        type="link"
+        href={downloadUrl}
+        icon="mdi:download"
+        iconPosition="right"
+    />
+</div>

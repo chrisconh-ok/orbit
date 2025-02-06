@@ -1,0 +1,22 @@
+---
+import { Button } from '@/shared/components/ui';
+
+interface Props {
+    /** The title text to display */
+    title: string;
+    /** The slug for generating the post URL */
+    slug: string;
+}
+
+const { title, slug } = Astro.props;
+---
+
+<h2 class="mb-2">
+    <Button
+    text={title}
+    type="link"
+    href={`/resources/${slug}`}
+    textSize='xl'
+    class='font-bold'
+    />
+</h2>

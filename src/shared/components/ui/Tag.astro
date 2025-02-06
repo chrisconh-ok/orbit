@@ -1,0 +1,32 @@
+---
+interface Props {
+    /** href for link tag */
+    href: string;
+    /** Optional title attribute for accessibility */
+    title?: string;
+    /** Optional quantity resoults with this tag*/
+    quantity?: number;
+    /** Optional additional CSS classes */
+    class?: string;
+}
+
+const {
+    href='#',
+    title,
+    quantity,
+    class: className = ''
+} = Astro.props;
+
+---
+<a
+    href={href}
+    class="inline-flex items-center bg-theme-tagBackground text-theme-textTags text-xs font-medium px-2.5 py-0.5 rounded hover:bg-theme-tagHoverBackground transition-colors capitalize"
+    title={title}
+>
+    <slot />
+    {quantity && (
+        <span class="ml-2 bg-theme-tagHoverBackground text-theme-textTags px-2 py-0.3 rounded text-xs">
+            {quantity}
+        </span>
+    )}
+</a>

@@ -1,0 +1,34 @@
+---
+import { getCollection, render } from 'astro:content'
+import MainLayout from '@layouts/MainLayout'
+import { MainContainer, ResourceContainer } from '@/shared/components/layout'
+
+// Obtener el recurso específico basado en el slug
+export async function getStaticPaths() {
+	const resources = await getCollection('resources')
+	return resources.map((resource) => ({
+		params: { slug: resource.id },
+		props: { resource }
+	}))
+}
+
+const { resource } = Astro.props;
+const { Content } = await render(resource);
+
+// Formatear la fecha
+const formattedDate = new Date(resource.data.pubDate).toLocaleDateString('es-ES', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric'
+})
+---
+
+<MainLayout title={resource.data.title}>
+	<MainContainer>
+		<ResourceContainer
+			data={resource.data}
+		>
+			<Content />
+		</ResourceContainer>
+	</MainContainer>
+</MainLayout>

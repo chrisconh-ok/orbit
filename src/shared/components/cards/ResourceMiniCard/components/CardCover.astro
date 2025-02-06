@@ -1,0 +1,55 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    /** Post data or image URL */
+    data: CollectionEntry<'resources'>['data'] | string;
+    /** The slug for generating the post URL */
+    slug: string;
+    /** Optional fileType */
+    fileType?: CollectionEntry<'resources'>['data']['fileType'] | string;
+    /** Optional title for alt text when using direct image URL */
+    title?: CollectionEntry<'resources'>['data']['title'] | string;
+    /** Optional additional CSS classes for container */
+    class?: string;
+}
+
+const {
+    data,
+    slug,
+    title = '',
+    fileType = 'pdf',
+    class: className = '',
+} = Astro.props;
+
+const imageUrl = typeof data === 'string' ? data : data.image;
+const imageTitle = typeof data === 'string' ? title : data.title;
+const resourceType = typeof data === 'string' ? fileType : data.fileType;
+
+const baseStyles = "flex justify-center overflow-hidden rounded-t-lg relative overflow-hidden";
+const imgStyles = "object-cover w-full h-auto transition-transform duration-300 hover:scale-110";
+
+---
+
+{imageUrl && (
+    <a href={`/resources/${slug}`}>
+        <div class:list={[baseStyles, className]}>
+            <img
+                src={imageUrl}
+                alt={imageTitle}
+                class={imgStyles}
+            />
+            <span class={`absolute top-2 right-2 text-xs font-medium px-2.5 py-0.5 rounded ${
+                resourceType === 'pdf'
+                    ? 'bg-red-100 text-red-800'
+                    : resourceType === 'code'
+                        ? 'bg-blue-100 text-blue-800'
+                        : resourceType === 'template'
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-purple-100 text-purple-800'
+            }`}>
+                {resourceType.toUpperCase()}
+            </span>
+        </div>
+    </a>
+)}

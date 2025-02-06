@@ -1,0 +1,44 @@
+[
+  {
+    "id": "youtube",
+    "name": "YouTube",
+    "href": "https://www.youtube.com/@OrbitBrackets",
+    "icon": "fa6-brands:youtube",
+    "title": "Visita nuestro canal de YouTube"
+  },
+  {
+    "id": "instagram",
+    "name": "Instagram",
+    "href": "https://www.instagram.com/orbitbrackets/",
+    "icon": "fa6-brands:instagram",
+    "title": "Síguenos en Instagram"
+  },
+  {
+    "id": "tiktok",
+    "name": "TikTok",
+    "href": "https://www.tiktok.com/@orbit.brackets",
+    "icon": "fa6-brands:tiktok",
+    "title": "Síguenos en TikTok"
+  },
+  {
+    "id": "linkedin",
+    "name": "LinkedIn",
+    "href": "https://www.linkedin.com/company/orbitbrackets/",
+    "icon": "fa6-brands:linkedin",
+    "title": "Conéctate con nosotros en LinkedIn"
+  },
+  {
+    "id": "twitter",
+    "name": "X (Twitter)",
+    "href": "https://x.com/OrbitBrackets",
+    "icon": "fa6-brands:x-twitter",
+    "title": "Síguenos en X (Twitter)"
+  },
+  {
+    "id": "pinterest",
+    "name": "Pinterest",
+    "href": "https://ar.pinterest.com/orbitbrackets/",
+    "icon": "fa6-brands:pinterest",
+    "title": "Síguenos en Pinterest"
+  }
+]

@@ -1,0 +1,21 @@
+---
+import { formatSmallDate } from '@shared/components/utils';
+
+interface Props {
+    /** src of image */
+    pubDate: Date;
+    /** Optional additional CSS classes for container */
+    class?: string;
+}
+
+const {
+    pubDate,
+    class: className = 'text-theme-textMuted capitalize',
+} = Astro.props;
+
+const baseStyles = "";
+---
+
+<time class:list={[baseStyles, className]} datetime={pubDate.toISOString()}>
+    {formatSmallDate(pubDate)}
+</time>

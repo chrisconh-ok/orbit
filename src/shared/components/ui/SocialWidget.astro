@@ -1,0 +1,50 @@
+---
+import { SocialButton } from '@shared/components/ui';
+
+const socialLinks = [
+	{
+		name: 'YouTube',
+		href: 'https://www.youtube.com/@OrbitBrackets',
+		icon: 'fa6-brands:youtube'
+	},
+	{
+		name: 'Instagram',
+		href: 'https://www.instagram.com/orbitbrackets/',
+		icon: 'fa6-brands:instagram'
+	},
+	{
+		name: 'TikTok',
+		href: 'https://www.tiktok.com/@orbit.brackets',
+		icon: 'fa6-brands:tiktok'
+	},
+	{
+		name: 'LinkedIn',
+		href: 'https://www.linkedin.com/company/orbitbrackets/',
+		icon: 'fa6-brands:linkedin'
+	},
+	{
+		name: 'X (Twitter)',
+		href: 'https://x.com/OrbitBrackets',
+		icon: 'fa6-brands:x-twitter'
+	},
+	{
+		name: 'Pinterest',
+		href: 'https://ar.pinterest.com/orbitbrackets/',
+		icon: 'fa6-brands:pinterest'
+	}
+]
+---
+
+<div class="flex flex-col items-center justify-center">
+	<div class="grid grid-cols-3 gap-4 lg:grid-flow-col-dense">
+		{
+			socialLinks.map((link) => (
+				<SocialButton 
+					name={link.name}
+					href={link.href}
+					icon={link.icon}
+				/>
+			))
+		}
+	</div>
+</div>

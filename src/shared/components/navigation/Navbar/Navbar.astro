@@ -1,0 +1,22 @@
+---
+import MainMenu from './components/MainMenu.astro'
+import Logo from './components/Logo.astro'
+import YoutubeButton from './components/YoutubeButton.astro'
+import MobileToggle from './components/MobileToggle.astro'
+---
+
+<nav class="border-brand-charleston-300 bg-brand-charleston">
+	<div class="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
+		<Logo />
+		<div class="flex space-x-3 md:order-2 rtl:space-x-reverse">
+			<YoutubeButton />
+			<MobileToggle />
+		</div>
+		<div
+			class="hidden w-full items-center justify-between md:order-1 md:flex md:w-auto"
+			id="navbar-cta"
+		>
+			<MainMenu />
+		</div>
+	</div>
+</nav>

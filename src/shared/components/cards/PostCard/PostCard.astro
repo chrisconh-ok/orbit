@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import CardContainer from './components/CardContainer.astro'
+import CardImage from './components/CardImage.astro'
+import CardInfo from './components/CardInfo.astro'
+import CardTitle from './components/CardTitle.astro'
+import CardDescription from './components/CardDescription.astro'
+import CardButton from './components/CardButton.astro'
+
+
+
+interface Props {
+    post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+---
+
+<CardContainer>
+    <CardImage data={post.data} slug={post.id} />
+    <div class="p-5">
+        <CardInfo post={post} />
+        <CardTitle title={post.data.title} slug={post.id} />
+        <CardDescription description={post.data.description} />
+        <CardButton slug={post.id} />
+    </div>
+</CardContainer>

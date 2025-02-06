@@ -1,0 +1,69 @@
+---
+import { Headline, Tag, Button } from '@shared/components/ui'
+
+interface Props {
+	title: string
+	pubDate: Date
+	tags?: string[]
+	image?: string
+}
+
+const {
+	title,
+	pubDate,
+	tags,
+	image,
+} = Astro.props
+
+// Formatear la fecha
+const formattedDate = new Date(pubDate).toLocaleDateString('es-ES', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric'
+})
+---
+
+<article
+	class="mx-auto w-full max-w-3xl pb-32"
+>
+	<!-- Button for back to the blog page -->
+	<Button class='mb-8' href='/blog' text="Volver al blog" type='link' icon='mdi:arrow-left-thick' iconPosition='left' />
+	<!-- Article Header -->
+	<header class="mb-4 lg:mb-6 not-format">
+		<Headline type="h1">{title}</Headline>
+		<div
+			class="flex flex-wrap items-center justify-between gap-2 mb-6"
+		>
+			<time class="text-theme-textMuted" datetime={pubDate.toISOString()}>
+				{formattedDate}
+			</time>
+			{
+				tags && (
+					<div class="flex flex-wrap gap-2 ml-4">
+						{tags.map((tag) => (
+							<Tag href={`/blog/tag/${tag}`} title={tag}>{tag}</Tag>
+						))}
+					</div>
+				)
+			}
+		</div>
+	</header>
+
+	<!-- Featured Image -->
+	{
+		image && (
+			<figure class="mb-8">
+				<img
+					src={image}
+					alt={title}
+					class="rounded-lg shadow-lg w-full h-auto"
+				/>
+			</figure>
+		)
+	}
+
+	<!-- Content -->
+	<div class="prose prose-lg max-w-none text-theme-textPrimary">
+		<slot />
+	</div>
+</article>

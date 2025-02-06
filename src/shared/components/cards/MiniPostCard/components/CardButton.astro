@@ -1,0 +1,19 @@
+---
+import { Button } from '@shared/components/ui';
+
+interface Props {
+    /** The slug for the blog post */
+    slug: string;
+}
+
+const { slug } = Astro.props;
+---
+
+<Button
+    text="Leer más"
+    type="link"
+    href={`/blog/${slug}`}
+    icon="mdi:arrow-right-thick"
+    iconPosition="right"
+    class="my-2"
+/>

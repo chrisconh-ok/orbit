@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+import { HeaderSection, ButtonSection } from '@/shared/components/ui'
+import { ContainerSection, SliderCards} from '@shared/components/layout'
+import { ResourceCard } from '@shared/components/cards'
+
+// Obtener todos los recursos
+const allResources: CollectionEntry<'resources'>[] = await getCollection('resources', ({ data }) => {
+	return data.featured
+})
+
+// Ordenar por fecha de publicación
+const featuredResources = allResources.sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+)
+
+---
+<ContainerSection id="resources">
+    <HeaderSection>
+        <fragment slot="headline">Recursos Gratuitos</fragment>
+        <fragment slot="subtitle">Descarga plantillas, documentos y recursos para impulsar tus proyectos</fragment>
+    </HeaderSection>
+    <SliderCards>
+        {
+            featuredResources.map((resource) => (
+                <ResourceCard resource={resource} />
+            ))
+        }
+    </SliderCards>
+    <ButtonSection text='Ver todos los recursos' href='/resources' type='primaryTurquoise' icon='mdi:post-it-note-text'/>
+</ContainerSection>
+

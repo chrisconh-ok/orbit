@@ -1,0 +1,17 @@
+---
+interface Props {
+    /** Optional additional CSS classes */
+    class?: string;
+}
+
+const {
+    class: className = ''
+} = Astro.props;
+
+const baseStyles = 'bg-theme-cardBackground rounded-lg border border-theme-cardBorder shadow-md';
+const layoutStyles = 'lg:w-full w-[85%] snap-center shrink-0';
+---
+
+<article class:list={[baseStyles, layoutStyles, className]}>
+    <slot />
+</article>

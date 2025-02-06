@@ -1,0 +1,29 @@
+---
+import { Button } from "@shared/components/ui"
+import { getCollection } from 'astro:content'
+
+const currentYear = new Date().getFullYear()
+const socials = await getCollection("social");
+---
+
+<footer class="bg-brand-charleston py-8 mt-auto">
+	<div class="mx-auto max-w-screen-xl px-4">
+		<div class="flex flex-row flex-wrap items-center justify-between">
+			<span class="text-sm text-theme-textPrimary">
+				© {currentYear} <a href="https://orbitbrackets.com/" class="hover:text-brand-turquoise">OrbitBrackets</a>
+			</span>
+			<div class="flex space-x-5">
+				{socials.map(({ data }) => (
+					<Button
+						text=""
+						type="link"
+						href={data.href}
+						target="_blank"
+						icon={data.icon}
+						title={data.title}
+					/>
+				))}
+			</div>
+		</div>
+	</div>
+</footer>

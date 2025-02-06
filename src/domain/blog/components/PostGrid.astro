@@ -1,0 +1,18 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { PostCard } from '@shared/components/cards'
+
+interface Props {
+    posts: CollectionEntry<'blog'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+<div class="grid gap-8 lg:grid-cols-2">
+    {
+        posts.map((post) => (
+            <PostCard post={post} />
+        ))
+    }
+</div>

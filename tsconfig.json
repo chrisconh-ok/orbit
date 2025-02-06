@@ -4,13 +4,16 @@
   "exclude": ["dist"],
   "compilerOptions": {
     "strictNullChecks": true,
+    "allowJs": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
+      "@domain/*": ["src/domain/*.astro"],
       "@features/*": ["src/features/*.astro"],
       "@components/*": ["src/shared/components/*.astro"],
       "@layouts/*": ["src/shared/layouts/*.astro"],
       "@pages/*": ["src/pages/*.astro"],
+      "@shared/*": ["src/shared/*/index.ts"],
       "@styles/*": ["src/styles/*.css"],
     }
   }

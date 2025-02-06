@@ -1,0 +1,16 @@
+---
+interface Props {
+    class?: string;
+}
+const { class: className = '' } = Astro.props;
+
+const text = 'Explicamos el desarrollo web de forma práctica para crear soluciones del mundo real.';
+const containerStyles = 'flex flex-col items-center max-w-3xl text-center';
+const textStyles = 'leading-relaxed text-balance text-2xl lg:leading-normal lg:text-3xl italic';
+---
+
+<div class={`${containerStyles} ${className}`}>
+    <p class={textStyles}>
+        {text}
+    </p>
+</div>

@@ -1,0 +1,16 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+
+// Estilos base para todos los headings
+const baseStyles = 'font-light text-theme-textSecondary sm:text-xl';
+
+const combinedStyles = `${baseStyles} ${className}`;
+---
+
+{
+  <p class={combinedStyles}><slot /></p>
+}

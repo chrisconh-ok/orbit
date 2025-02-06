@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+import { HeaderSection, ButtonSection } from '@/shared/components/ui'
+import { ContainerSection, SliderCards} from '@shared/components/layout'
+import { PostCard } from '@shared/components/cards'
+
+// Obtener todos los posts y filtrar los destacados
+const allPosts: CollectionEntry<'blog'>[] = await getCollection('blog', ({ data }) => {
+	return !data.draft && data.featured
+})
+
+// Ordenar por fecha de publicación y tomar los 4 más recientes
+const featuredPosts = allPosts
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 3)
+
+---
+<ContainerSection>
+    <HeaderSection>
+        <fragment slot="headline">Blog Destacado</fragment>
+        <fragment slot="subtitle">Descubre nuestros artículos más relevantes sobre diseño y desarrollo web</fragment>
+    </HeaderSection>
+    <SliderCards>
+        {
+            featuredPosts.map((post) => (
+                <PostCard post={post} />
+            ))
+        }
+    </SliderCards>
+    <ButtonSection text='Ver todos los posts' href='/blog' type='primaryTurquoise' icon='mdi:post-it-note-text'/>
+</ContainerSection>
+
+
+

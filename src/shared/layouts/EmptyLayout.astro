@@ -1,0 +1,24 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from '@/consts.ts'
+import BaseHead from '@layouts/partials/BaseHead'
+import BaseScripts from '@layouts/partials/BaseScripts'
+
+export interface Props {
+	title?: string
+	description?: string
+	bodyClass?: string
+}
+
+const { bodyClass = '', title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props as Props
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+	<body class={bodyClass}>
+		<slot />
+		<BaseScripts />
+	</body>
+</html>

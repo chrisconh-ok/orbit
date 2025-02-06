@@ -1,0 +1,20 @@
+---
+
+import {LogoOB} from '@shared/components/brand';
+import HeroButtons from './HeroButtons.astro';
+
+---
+
+<!-- Sección "Hero" o de bienvenida -->
+<section class="bg-theme-heroBackground text-theme-textPrimary flex items-center justify-center py-12">
+    <!-- Contenedor principal -->
+    <div class="flex flex-col items-center p-8 max-w-3xl text-center space-y-6">
+        <LogoOB />
+        
+        <p class="leading-relaxed text-balance text-2xl lg:leading-normal lg:text-3xl italic pt-4 pb-8 text-material-medium-emphasis text-theme-textPrimary">
+            Explicamos el desarrollo web de forma práctica para crear soluciones del mundo real.
+        </p>
+
+        <HeroButtons />
+    </div>
+</section>

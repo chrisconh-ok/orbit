@@ -1,0 +1,22 @@
+---
+import { Headline, Subtitle } from '@/shared/components/ui';
+
+interface Props {
+    class?: string;
+  }
+  
+const { class: className = '' } = Astro.props;
+
+// Estilos base para todos los headings
+const baseStyles = 'mx-auto max-w-screen-sm text-center lg:mb-16 mb-8';
+
+const combinedStyles = `${baseStyles} ${className}`;
+---
+  
+{
+    <div class={combinedStyles}>
+        <Headline type="h2"><slot name="headline" /></Headline>
+        <Subtitle><slot name="subtitle" /></Subtitle>
+    </div>
+}
+

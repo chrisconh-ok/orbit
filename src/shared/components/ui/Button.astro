@@ -1,0 +1,134 @@
+---
+import { Icon } from 'astro-icon/components'
+
+interface Props {
+    /** The text content of the button */
+    text: string;
+    /** The type of button style to apply */
+    type?: 'primary' | 'primaryTurquoise' | 'primaryRed' | 'primaryTangelo' | 'secondary' | 'link';
+    /** Optional href for link buttons */
+    href?: string;
+    /** Optional target for link buttons */
+    target?: '_blank' | '_self';
+    /** Optional icon name from astro-icon */
+    icon?: string;
+    /** Optional icon position */
+    iconPosition?: 'left' | 'right';
+    /** Optional icon size (number will be used for both width and height) */
+    iconSize?: number;
+    /** Optional icon size for mobile screens (number will be used for both width and height) */
+    iconSizeMobile?: number;
+    /** Optional text size */
+    textSize?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+    /** Optional title attribute for accessibility */
+    title?: string;
+    /** Optional additional CSS classes */
+    class?: string;
+}
+
+const {
+    text,
+    type = 'primary',
+    href,
+    target,
+    icon,
+    iconPosition = 'right',
+    iconSize = 4,
+    iconSizeMobile,
+    textSize = 'sm',
+    title,
+    class: className = ''
+} = Astro.props;
+
+const styles = {
+    
+    //Button Primary Charleston
+    primary: 'text-theme-buttonTextCharleston hover:text-theme-buttonHoverTextCharleston focus:ring-theme-buttonHoverRingCharleston',
+
+    //Button Primary Turquoise
+    primaryTurquoise: 'text-theme-buttonTextTurquoise hover:text-theme-buttonHoverTextTurquoise focus:ring-theme-buttonHoverRingTurquoise',
+
+    //Button Primary Tangelo
+    primaryTangelo: 'text-theme-buttonTextTangelo hover:text-theme-buttonHoverTextTangelo focus:ring-theme-buttonHoverRingTangelo',
+
+    //Button Primary Red
+    primaryRed: 'text-theme-buttonTextRed hover:text-theme-buttonHoverTextRed focus:ring-theme-buttonHoverRingRed',
+    
+    secondary: 'text-theme-buttonSecondaryText hover:text-theme-buttonSecondaryHoverText border-theme-buttonSecondaryBorder hover:border-theme-buttonSecondaryHoverBorder border-solid border-2 ',
+    
+    //Button Link
+    link: 'text-theme-linkText hover:text-theme-linkTextHover hover:underline'
+};
+
+const baseStyles = 'inline-flex items-center rounded-lg';
+const primaryStyles = 'px-5 py-2.5 font-bold focus:ring-2 focus:outline-none bg-theme-buttonBackground hover:bg-theme-buttonHoverBackground';
+---
+
+{href ? (
+    <a
+        href={href}
+        target={target}
+        rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+        title={title}
+        class:list={[
+            baseStyles,
+            type?.includes('primary') && primaryStyles,
+            styles[type],
+            'text-'+textSize,
+            className
+        ]}
+    >
+        {icon && iconPosition === 'left' && (
+            <Icon 
+                name={icon} 
+                class:list={[
+                    iconSizeMobile ? `w-${iconSizeMobile} h-${iconSizeMobile}` : `w-${iconSize} h-${iconSize}`,
+                    `md:w-${iconSize} md:h-${iconSize}`,
+                    { 'mr-2': text }
+                ]}
+            />
+        )}
+        {text}
+        {icon && iconPosition === 'right' && (
+            <Icon 
+                name={icon} 
+                class:list={[
+                    iconSizeMobile ? `w-${iconSizeMobile} h-${iconSizeMobile}` : `w-${iconSize} h-${iconSize}`,
+                    `md:w-${iconSize} md:h-${iconSize}`,
+                    { 'ml-2': text }
+                ]}
+            />
+        )}
+    </a>
+) : (
+    <button
+        class:list={[
+            baseStyles,
+            type === 'primary' && primaryStyles,
+            styles[type],
+            className
+        ]}
+    >
+        {icon && iconPosition === 'left' && (
+            <Icon 
+                name={icon} 
+                class:list={[
+                    iconSizeMobile ? `w-${iconSizeMobile} h-${iconSizeMobile}` : `w-${iconSize} h-${iconSize}`,
+                    `md:w-${iconSize} md:h-${iconSize}`,
+                    { 'mr-2': text }
+                ]}
+            />
+        )}
+        {text}
+        {icon && iconPosition === 'right' && (
+            <Icon 
+                name={icon} 
+                class:list={[
+                    iconSizeMobile ? `w-${iconSizeMobile} h-${iconSizeMobile}` : `w-${iconSize} h-${iconSize}`,
+                    `md:w-${iconSize} md:h-${iconSize}`,
+                    { 'ml-2': text }
+                ]}
+            />
+        )}
+    </button>
+)}

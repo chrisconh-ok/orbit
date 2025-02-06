@@ -1,0 +1,41 @@
+---
+import { Button } from '@/shared/components/ui';
+
+interface Props {
+    /** The text content of the button */
+    text: string;
+    /** Optional href for link buttons */
+    href: string;
+    /** Optional icon name from astro-icon */
+    icon: string;
+    /** The type of button style to apply */
+    type?: 'primary' | 'primaryTurquoise' | 'primaryRed' | 'primaryTangelo' | 'secondary' | 'link';
+    /** Optional additional CSS classes */
+    class?: string;
+  }
+  
+const { 
+    text,
+    href,
+    icon,
+    type = 'primary',
+    class: className = ''
+} = Astro.props;
+
+// Estilos base para todos los headings
+const baseStyles = 'text-center mt-20';
+
+const combinedStyles = `${baseStyles} ${className}`;
+---
+  
+{
+    <div class={combinedStyles}>
+        <Button
+                text={text}
+                type={type}
+                href={href}
+                icon={icon}
+            />
+    </div>
+}
+

@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+import type { GetStaticPathsOptions, Page } from 'astro'
+import BlogPage from '@domain/blog/BlogPage'
+
+// Configuración de la paginación
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+    try {
+        const allPosts: CollectionEntry<'blog'>[] = await getCollection('blog')
+        const posts = allPosts.filter((post) => !post.data.draft)
+        const sortedPosts = posts.sort(
+            (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+        )
+
+        const allTags = [...new Set(posts.flatMap((post) => post.data.tags || []))]
+        const tagCount = allTags.reduce(
+            (acc, tag) => {
+                acc[tag] = posts.filter((post) => post.data.tags?.includes(tag)).length
+                return acc
+            },
+            {} as Record<string, number>
+        )
+        const sortedTags = allTags.sort((a, b) => tagCount[b] - tagCount[a])
+
+        return paginate(sortedPosts, {
+            pageSize: 4,
+            props: { numberOfPosts: sortedPosts.length, tags: sortedTags, tagCount }
+        })
+    } catch (error) {
+        console.error('Error al obtener los posts:', error)
+        return []
+    }
+}
+
+interface Props {
+    page: Page<CollectionEntry<'blog'>>
+    tags: string[]
+    tagCount: Record<string, number>
+}
+
+const { page, tags, tagCount } = Astro.props as Props
+---
+
+<BlogPage
+    page={page}
+    tags={tags}
+    tagCount={tagCount}
+/>

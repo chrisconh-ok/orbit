@@ -1,0 +1,24 @@
+---
+import EmptyLayout from '@layouts/EmptyLayout'
+import { SocialWidget, Headline } from '@shared/components/ui'
+import LinksHero from './components/LinksHero.astro'
+import SliderPosts from './components/SliderPosts.astro'
+import SliderResources from './components/SliderResources.astro'
+import LinksFooter from './components/LinksFooter.astro'
+import LinksFeatures from './components/LinksFeatures.astro'
+---
+
+<EmptyLayout
+	title="Enlaces - Orbit Brackets"
+	description="Potenciamos el diseño y desarrollo web con recursos que combinan creatividad y funcionalidad."
+>
+	<main class="bg-theme-siteBackground pb-32 space-y-12">
+		<LinksHero />
+		<Headline type='h1' class="text-center pt-12">Nuestros enlaces</Headline>
+		<SocialWidget />
+		<LinksFeatures />
+		<SliderPosts />
+		<SliderResources />
+	</main>
+	<LinksFooter />
+</EmptyLayout>

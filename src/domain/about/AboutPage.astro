@@ -1,0 +1,67 @@
+---
+import MainLayout from '@layouts/MainLayout'
+import { Headline, Subtitle } from '@/shared/components/ui';
+import { MainContainer } from '@/shared/components/layout';
+import { HeaderSection } from '@/shared/components/ui';
+---
+
+<MainLayout
+	title="Acerca de - Orbit Brackets"
+	description="Conoce más sobre Orbit Brackets, nuestra misión, visión y valores en el desarrollo web educativo."
+>
+	<MainContainer class="pb-48">
+		<div class="space-y-16 ">
+			<div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+				<Headline type="h1" class="!leading-snug">
+					Acerca de 
+					<span
+					class="tracking-wider uppercase self-center whitespace-nowrap font-lato font-bold text-theme-textPrimary"
+					>Orbit<span class="text-brand-turquoise">Brackets</span>
+					</span>
+				</Headline>
+				<Subtitle>Orbit Brackets es una plataforma educativa enfocada en enseñar desarrollo web de forma práctica. A través de proyectos reales, ayudamos a emprendedores, freelancers y autodidactas a convertir su aprendizaje en soluciones concretas.</Subtitle>
+			</div>
+
+			<HeaderSection>
+				<Fragment slot="headline">Misión</Fragment>
+				<Fragment slot="subtitle">
+					Enseñamos desarrollo web a través de proyectos prácticos, diseñados para emprendedores, freelancers y autodidactas que quieren pasar de aprender a crear soluciones reales.
+				</Fragment>
+			</HeaderSection>
+
+			<HeaderSection>
+				<Fragment slot="headline">Visión</Fragment>
+				<Fragment slot="subtitle">
+					Convertirnos en la plataforma de referencia para personas innovadoras que buscan aprender y transformar sus habilidades en soluciones reales.
+				</Fragment>
+			</HeaderSection>
+
+			<div class="mx-auto max-w-screen-sm text-center">
+				<Headline type="h2">Valores</Headline>
+				<ul class="mt-6 space-y-4 text-left text-theme-textSecondary text-lg">
+					<li class="flex items-start">
+						<span class="mr-2">•</span>
+						<span><strong>Acción práctica:</strong> Cada curso y proyecto está diseñado para transformar ideas en soluciones funcionales.</span>
+					</li>
+					<li class="flex items-start">
+						<span class="mr-2">•</span>
+						<span><strong>Adaptabilidad:</strong> Ofrecemos recursos flexibles que se ajustan a distintos estilos de aprendizaje.</span>
+					</li>
+					<li class="flex items-start">
+						<span class="mr-2">•</span>
+						<span><strong>Innovación simplificada:</strong> Filtramos la información clave para que los estudiantes puedan enfocarse en construir.</span>
+					</li>
+					<li class="flex items-start">
+						<span class="mr-2">•</span>
+						<span><strong>Propósito creativo:</strong> Inspiramos la fusión de tecnología y creatividad en proyectos innovadores.</span>
+					</li>
+					<li class="flex items-start">
+						<span class="mr-2">•</span>
+						<span><strong>Progreso continuo:</strong> Promovemos el aprendizaje constante de nuevas tecnologías para mejorar continuamente.</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</MainContainer>
+</MainLayout>
+

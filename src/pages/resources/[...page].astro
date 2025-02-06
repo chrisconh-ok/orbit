@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+import type { GetStaticPathsOptions, Page } from 'astro'
+import ResourcesPage from '@domain/resources/ResourcesPage'
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+	try {
+		const allResources: CollectionEntry<'resources'>[] = await getCollection('resources')
+		const resources = allResources
+		const sortedResources = allResources.sort(
+			(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+		)
+
+		const allTags = [...new Set(resources.flatMap((resources) => resources.data.tags || []))]
+        const tagCount = allTags.reduce(
+            (acc, tag) => {
+                acc[tag] = resources.filter((resources) => resources.data.tags?.includes(tag)).length
+                return acc
+            },
+            {} as Record<string, number>
+        )
+		const sortedTags = allTags.sort((a, b) => tagCount[b] - tagCount[a])
+
+		return paginate(sortedResources, {
+			pageSize: 4,
+			props: { numberOfResources: sortedResources.length, tags: sortedTags, tagCount }
+
+		})
+
+	} catch (error) {
+		console.error('Error al obtener los recursos:', error)
+		return []
+	}
+}
+
+interface Props {
+	page: Page<CollectionEntry<'resources'>>
+	tags: string[]
+	tagCount: Record<string, number>
+}
+
+const { page, tags, tagCount } = Astro.props
+---
+
+
+<ResourcesPage
+    page={page}
+    tags={tags}
+    tagCount={tagCount}
+/>
+

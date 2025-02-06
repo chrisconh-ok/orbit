@@ -1,0 +1,51 @@
+---
+export type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+
+interface Props {
+  type: HeadingLevel;
+  class?: string;
+  textSize?: string;
+  mdTextSize?: string;
+}
+
+const { type, class: className = '', textSize, mdTextSize } = Astro.props;
+
+// Estilos base para todos los headings
+const baseStyles = 'tracking-tight text-theme-textPrimary';
+
+// Estilos específicos para cada nivel de heading
+const defaultHeadingSizes = {
+  h1: { text: 'text-4xl', md: 'md:text-5xl' },
+  h2: { text: 'text-3xl', md: 'md:text-4xl' },
+  h3: { text: 'text-2xl', md: 'md:text-2xl' },
+  h4: { text: 'text-xl', md: 'md:text-xl' },
+  h5: { text: 'text-lg', md: 'md:text-lg' },
+  h6: { text: 'text-base', md: 'md:text-lg' }
+};
+
+// Función para procesar los tamaños de texto
+const processTextSize = (size: string | undefined, defaultSize: string, prefix: string) => {
+  if (!size) return defaultSize;
+  return size.startsWith(prefix) ? size : `${prefix}${size}`;
+};
+
+const headingStyles = {
+  h1: `${processTextSize(textSize, defaultHeadingSizes.h1.text, 'text-')} ${processTextSize(mdTextSize, defaultHeadingSizes.h1.md, 'md:text-')} mb-8 font-extrabold`,
+  h2: `${processTextSize(textSize, defaultHeadingSizes.h2.text, 'text-')} ${processTextSize(mdTextSize, defaultHeadingSizes.h2.md, 'md:text-')} mb-4 font-extrabold`,
+  h3: `${processTextSize(textSize, defaultHeadingSizes.h3.text, 'text-')} ${processTextSize(mdTextSize, defaultHeadingSizes.h3.md, 'md:text-')} mb-4 font-bold`,
+  h4: `${processTextSize(textSize, defaultHeadingSizes.h4.text, 'text-')} ${processTextSize(mdTextSize, defaultHeadingSizes.h4.md, 'md:text-')} mb-2 font-bold`,
+  h5: `${processTextSize(textSize, defaultHeadingSizes.h5.text, 'text-')} ${processTextSize(mdTextSize, defaultHeadingSizes.h5.md, 'md:text-')} mb-2 font-semibold`,
+  h6: `${processTextSize(textSize, defaultHeadingSizes.h6.text, 'text-')} ${processTextSize(mdTextSize, defaultHeadingSizes.h6.md, 'md:text-')} mb-6 font-semibold`
+};
+
+const combinedStyles = `${baseStyles} ${headingStyles[type]} ${className}`;
+---
+
+{
+  type === 'h1' ? <h1 class={combinedStyles}><slot /></h1> :
+  type === 'h2' ? <h2 class={combinedStyles}><slot /></h2> :
+  type === 'h3' ? <h3 class={combinedStyles}><slot /></h3> :
+  type === 'h4' ? <h4 class={combinedStyles}><slot /></h4> :
+  type === 'h5' ? <h5 class={combinedStyles}><slot /></h5> :
+  <h6 class={combinedStyles}><slot /></h6>
+}

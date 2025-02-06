@@ -1,0 +1,49 @@
+---
+import { Button } from "@shared/components/ui";
+
+interface Props {
+    /** Url prev page */
+    urlPrev: string;
+    /** Url next page */
+    urlNext: string;
+    /** Current Page */
+    currentPage: number;
+    /** Last Page */
+    lastPage: number;
+}
+
+const {
+    urlPrev,
+    urlNext,
+    currentPage,
+    lastPage,
+} = Astro.props;
+
+---
+
+<nav class="flex justify-center mt-8 space-x-4" aria-label="Pagination">
+    {urlPrev && (
+        <Button 
+            text='Anterior'
+            type='primary'
+            icon='mdi:arrow-left-thick'
+            iconPosition='left'
+            href={urlPrev}
+            title='Página anterior'
+        />
+    )}
+    <span class="text-theme-textPrimary bg-theme-cardBackground border border-theme-cardBorder inline-flex items-center rounded-lg px-5 py-2.5 font-bold text-sm ">
+        
+        Página {currentPage} de {lastPage}
+    </span>
+    {urlNext && (
+        <Button 
+            text='Siguiente'
+            type='primary'
+            icon='mdi:arrow-right-thick'
+            iconPosition='right'
+            href={urlNext}
+            title='Página siguiente'
+        />
+    )}
+</nav>

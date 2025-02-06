@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content'
+import type { GetStaticPathsOptions } from 'astro'
+import MainLayout from '@layouts/MainLayout'
+import { MainContainer, ContentGrid } from '@shared/components/layout'
+import { Headline, Subtitle } from '@shared/components/ui'
+import { PostCard } from '@shared/components/cards'
+import { Pagination } from '@shared/components/navigation'
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+    const posts = await getCollection('blog')
+    const tags = [...new Set(posts.flatMap((post) => post.data.tags ?? []))]
+    
+    return tags.flatMap((tag) => {
+        const filteredPosts = posts
+            .filter((post) => post.data.tags?.includes(tag))
+            .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+
+        return paginate(filteredPosts, {
+            params: { tag },
+            pageSize: 4,
+            props: { tag }
+        })
+    })
+}
+
+const { page, tag } = Astro.props
+---
+
+<MainLayout title={`Posts etiquetados con "${tag}" | Página ${page.currentPage}`}>
+    <MainContainer>
+        <header class="mb-12">
+            <Headline class="text-center" type="h1">Posts etiquetados con "{tag}"</Headline>
+            <Subtitle class="text-center">
+                {page.total} {page.total === 1 ? ' artículo encontrado' : ' artículos encontrados'}
+            </Subtitle>
+        </header>
+        
+        <ContentGrid>
+            {page.data.map(post => (
+                <PostCard post={post} />
+            ))}
+        </ContentGrid>
+
+        {(page.url.prev || page.url.next) && (
+            <Pagination
+                urlPrev={page.url.prev ?? ''}
+                urlNext={page.url.next ?? ''}
+                currentPage={page.currentPage} 
+                lastPage={page.lastPage ?? ''}
+            />
+        )}
+    </MainContainer>
+</MainLayout>

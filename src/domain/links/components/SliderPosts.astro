@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+
+import { HeaderSection, ButtonSection, Headline } from '@/shared/components/ui'
+import { ContainerSection, SliderMiniCards} from '@shared/components/layout'
+import { MiniPostCard } from '@shared/components/cards'
+
+// Obtener posts destacados
+const allPosts: CollectionEntry<'blog'>[] = await getCollection('blog')
+const featuredPosts = allPosts
+	.filter((post) => !post.data.draft && post.data.featured)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 4)
+---
+
+<ContainerSection>
+    <HeaderSection>
+        <fragment slot="headline">Blog Destacado</fragment>
+        <fragment slot="subtitle">Descubre nuestros artículos más relevantes sobre diseño y desarrollo web</fragment>
+    </HeaderSection>
+    <div class="lg:grid lg:gap-6 lg:grid-cols-4 flex overflow-x-auto gap-4 snap-x snap-mandatory -mx-4 px-4 hide-scrollbar">
+        {
+            featuredPosts.map((post) => (
+                <MiniPostCard post={post} />
+            ))
+        }
+    </div>
+    <ButtonSection text='Ver todos los posts' href='/blog' type='primaryTurquoise' icon='mdi:post-it-note-text'/>
+</ContainerSection>
+
+<style>
+	/* Ocultar scrollbar solo en dispositivos táctiles */
+	@media (hover: none) {
+		.hide-scrollbar {
+			scrollbar-width: none; /* Firefox */
+			-ms-overflow-style: none; /* IE and Edge */
+		}
+		.hide-scrollbar::-webkit-scrollbar {
+			display: none; /* Chrome, Safari, Opera */
+		}
+	}
+</style>

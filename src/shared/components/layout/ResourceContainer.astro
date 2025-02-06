@@ -1,0 +1,96 @@
+---
+import { Headline, Tag, Button } from '@shared/components/ui'
+import type { CollectionEntry } from 'astro:content';
+
+
+interface Props {
+	/** Resource data */
+    data: CollectionEntry<'resources'>['data'];
+}
+
+const {
+	data
+} = Astro.props
+
+const { title, image, tags, pubDate, fileType, fileSize, downloadUrl } = data;
+
+// Formatear la fecha
+const formattedDate = new Date(pubDate).toLocaleDateString('es-ES', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric'
+})
+---
+
+<article
+	class="mx-auto w-full max-w-3xl pb-32"
+>
+	<!-- Button for back to the blog page -->
+	<Button class='mb-8' href='/resources' text="Volver a los recursos" type='link' icon='mdi:arrow-left-thick' iconPosition='left' />
+	<!-- Article Header -->
+	<header class="mb-4 lg:mb-6 not-format">
+		<Headline type="h1">{title}</Headline>
+		<div
+			class="flex flex-wrap items-center justify-between gap-2 mb-6"
+		>
+			<div class="flex flex-wrap items-center gap-2">
+				<time class="text-theme-textMuted" datetime={pubDate.toISOString()}>
+					{formattedDate}
+				</time>
+				<span class={`text-xs font-medium px-2.5 py-0.5 rounded ${
+					fileType === 'pdf'
+						? 'bg-red-900 text-red-300'
+						: fileType === 'code'
+							? 'bg-blue-900 text-blue-300'
+							: fileType === 'template'
+								? 'bg-green-900 text-green-300'
+								: 'bg-purple-900 text-purple-300'
+				}`}>
+					{fileType.toUpperCase()}
+				</span>
+			</div>
+			{
+				tags && (
+					<div class="flex flex-wrap gap-2 ml-4">
+						{tags.map((tag) => (
+							<Tag href={`/resources/tag/${tag}`} title={tag}>{tag}</Tag>
+						))}
+					</div>
+				)
+			}
+		</div>
+	</header>
+
+	<!-- Featured Image -->
+	{
+		image && (
+			<figure class="mb-8">
+				<img
+					src={image}
+					alt={title}
+					class="rounded-lg shadow-lg w-full h-auto"
+				/>
+			</figure>
+		)
+	}
+	<!-- Button to Download -->
+	<div class="flex gap-4 mb-8">
+		<a
+			href={downloadUrl}
+			class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center rounded-lg focus:ring-4 focus:outline-none text-theme-textPrimary bg-blue-600 hover:bg-blue-700 focus:ring-blue-800"
+		>
+			Descargar Ahora
+			<svg class="w-4 h-4 ml-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+				<path d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"></path>
+			</svg>
+		</a>
+		<span class="inline-flex items-center text-sm text-theme-textMuted">
+			Tamaño: {fileSize}
+		</span>
+	</div>
+
+	<!-- Content -->
+	<div class="prose prose-lg max-w-none text-theme-textPrimary">
+		<slot />
+	</div>
+</article>

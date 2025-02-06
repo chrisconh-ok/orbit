@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content'
+import type { GetStaticPathsOptions, Page } from 'astro'
+import MainLayout from '@layouts/MainLayout'
+import { MainContainer, ContentGrid } from '@shared/components/layout'
+import { Headline, Subtitle } from '@shared/components/ui'
+import { ResourceCard } from '@shared/components/cards'
+import {Pagination} from '@shared/components/navigation'
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+    const resources = await getCollection('resources')
+    const tags = [...new Set(resources.flatMap((resource) => resource.data.tags ?? []))]
+    
+    return tags.flatMap((tag) => {
+        const filteredResources = resources
+            .filter((resource) => resource.data.tags?.includes(tag))
+            .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+
+        return paginate(filteredResources, {
+            params: { tag },
+            pageSize: 4,
+            props: { tag }
+        })
+    })
+}
+
+const { page, tag } = Astro.props
+---
+
+<MainLayout title={`Recursos etiquetados con "${tag}" | Página ${page.currentPage}`}>
+    <MainContainer>
+        <header class="mb-12">
+            <Headline class="text-center" type="h1">Recursos etiquetados con "{tag}"</Headline>
+            <Subtitle class="text-center">
+                {page.total} {page.total === 1 ? ' recurso encontrado' : ' recursos encontrados'}
+            </Subtitle>
+        </header>
+        
+        <ContentGrid>
+            {page.data.map(resource => (
+                <ResourceCard resource={resource} />
+            ))}
+        </ContentGrid>
+
+        {(page.url.prev || page.url.next) && (
+            <Pagination
+                urlPrev={page.url.prev ?? ''}
+                urlNext={page.url.next ?? ''}
+                currentPage={page.currentPage} 
+                lastPage={page.lastPage ?? ''}
+            />
+        )}
+    </MainContainer>
+</MainLayout>

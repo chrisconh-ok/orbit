@@ -1,0 +1,28 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import type { Page } from 'astro'
+import MainLayout from '@layouts/MainLayout'
+import { MainContainer } from '@shared/components/layout'
+
+import BlogHeader from './components/BlogHeader.astro'
+import TagsWidget from './components/TagsWidget.astro'
+import PostGrid from './components/PostGrid.astro'
+import Pagination from './components/Pagination.astro'
+
+interface Props {
+    page: Page<CollectionEntry<'blog'>>
+    tags: string[]
+    tagCount: Record<string, number>
+}
+
+const { page, tags, tagCount } = Astro.props
+---
+
+<MainLayout title={`Blog - Página ${page.currentPage}`}>
+    <MainContainer>
+        <BlogHeader />
+        <TagsWidget tags={tags} tagCount={tagCount} />
+        <PostGrid posts={page.data} />
+        <Pagination page={page} />
+    </MainContainer>
+</MainLayout>

@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+
+import { Headline, HeaderSection, ButtonSection } from '@/shared/components/ui'
+import { ContainerSection, SliderMiniCards} from '@shared/components/layout'
+import { ResourceMiniCard } from '@shared/components/cards'
+
+// Obtener recursos destacados
+const allResources: CollectionEntry<'resources'>[] = await getCollection('resources')
+const featuredResources = allResources
+	.filter((resource) => resource.data.featured)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 4)
+---
+
+<ContainerSection id="resources">
+    <HeaderSection>
+        <fragment slot="headline">Recursos Gratuitos</fragment>
+        <fragment slot="subtitle">Descarga plantillas, documentos y recursos para impulsar tus proyectos</fragment>
+    </HeaderSection>
+    <div class="lg:grid lg:gap-6 lg:grid-cols-4 flex overflow-x-auto gap-4 snap-x snap-mandatory -mx-4 px-4 hide-scrollbar">
+        {
+            featuredResources.map((resource) => (
+                <ResourceMiniCard resource={resource} />
+            ))
+        }
+    </div>
+    <ButtonSection text='Ver todos los recursos' href='/resources' type='primaryTurquoise' icon='mdi:post-it-note-text'/>
+</ContainerSection>
+
+<style>
+	/* Ocultar scrollbar solo en dispositivos táctiles */
+	@media (hover: none) {
+		.hide-scrollbar {
+			scrollbar-width: none; /* Firefox */
+			-ms-overflow-style: none; /* IE and Edge */
+		}
+		.hide-scrollbar::-webkit-scrollbar {
+			display: none; /* Chrome, Safari, Opera */
+		}
+	}
+</style>

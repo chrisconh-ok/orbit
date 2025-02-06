@@ -1,0 +1,27 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import { CardCover, CardContainer, CardInfo, CardTitle, CardDescription, CardButton } from './components'
+
+
+
+interface Props {
+    resource: CollectionEntry<'resources'>;
+}
+
+const { resource } = Astro.props;
+---
+
+<CardContainer>
+    <div>
+        <CardCover data={resource.data} slug={resource.id} />
+        <div class="p-5">
+            <CardInfo resource={resource} />
+            <CardTitle title={resource.data.title} slug={resource.id} />
+            <CardDescription description={resource.data.description} />
+        </div>
+    </div>
+    <div class="px-5 pb-5">
+        <CardButton slug={resource.id} downloadUrl={resource.data.downloadUrl} fileSize={resource.data.fileSize}/>
+    </div>
+</CardContainer>
