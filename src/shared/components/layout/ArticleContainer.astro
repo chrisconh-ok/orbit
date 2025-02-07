@@ -24,7 +24,7 @@ const formattedDate = new Date(pubDate).toLocaleDateString('es-ES', {
 ---
 
 <article
-	class="mx-auto w-full max-w-3xl pb-32"
+	class="mx-auto w-full max-w-3xl pb-32 "
 >
 	<!-- Button for back to the blog page -->
 	<Button class='mb-8' href='/blog' text="Volver al blog" type='link' icon='mdi:arrow-left-thick' iconPosition='left' />
@@ -63,7 +63,7 @@ const formattedDate = new Date(pubDate).toLocaleDateString('es-ES', {
 	}
 
 	<!-- Content -->
-	<div class="prose prose-lg max-w-none text-theme-textPrimary">
+	<div class="prose prose-invert prose-lg max-w-none text-theme-textPrimary">
 		<slot />
 	</div>
 </article>
