@@ -31,6 +31,22 @@ const resourcesCollection = defineCollection({
 	}),
 });
 
+const coursesCollection = defineCollection({
+	loader: glob({ pattern: "**/*.{md,mdx}",
+	base: 'src/content/courses'}),
+	schema: z.object({
+		title: z.string(),
+		description: z.string(),
+		pubDate: z.date(),
+		regularPrice: z.number(),
+		salePrice: z.number().default(0),
+		image: z.string(),
+		purchaseLink: z.string(),
+		featured: z.boolean().default(false),
+		tags: z.array(z.string()).default([])
+	}),
+});
+
 const socialLinksCollection = defineCollection({
 	loader: file("src/content/SocialLinks.json"),
 	schema: z.object({
