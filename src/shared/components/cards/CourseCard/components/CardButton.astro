@@ -1,0 +1,29 @@
+---
+import { Button } from '@shared/components/ui';
+
+interface Props {
+    /** The date from resource */
+    slug: string;
+    regularPrice: number;
+    purchaseLink: string;
+}
+
+const { slug, regularPrice, purchaseLink } = Astro.props;
+---
+<div class="flex justify-between">
+    <Button
+        text="Ver curso"
+        type="link"
+        href={`/courses/${slug}`}
+        icon="mdi:arrow-right-thick"
+        iconPosition="right"
+    />
+    
+    <Button
+        text="Obtener curso"
+        type="link"
+        href={purchaseLink}
+        icon="mdi:shopping-cart"
+        iconPosition="right"
+    />
+</div>

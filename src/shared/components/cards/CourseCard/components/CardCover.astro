@@ -1,0 +1,40 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    /** Post data or image URL */
+    data: CollectionEntry<'courses'>['data'] | string;
+    /** The slug for generating the post URL */
+    slug: string;
+    /** Optional title for alt text when using direct image URL */
+    title?: CollectionEntry<'resources'>['data']['title'] | string;
+    /** Optional additional CSS classes for container */
+    class?: string;
+}
+
+const {
+    data,
+    slug,
+    title = '',
+    class: className = '',
+} = Astro.props;
+
+const imageUrl = typeof data === 'string' ? data : data.image;
+const imageTitle = typeof data === 'string' ? title : data.title;
+
+const baseStyles = "flex justify-center overflow-hidden rounded-t-lg relative overflow-hidden";
+const imgStyles = "object-cover w-full h-auto transition-transform duration-300 hover:scale-110";
+
+---
+
+{imageUrl && (
+    <a href={`/courses/${slug}`}>
+        <div class:list={[baseStyles, className]}>
+            <img
+                src={imageUrl}
+                alt={imageTitle}
+                class={imgStyles}
+            />
+        </div>
+    </a>
+)}

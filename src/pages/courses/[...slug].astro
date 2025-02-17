@@ -1,0 +1,26 @@
+---
+import { getCollection, render } from 'astro:content'
+import MainLayout from '@layouts/MainLayout'
+import { MainContainer, CoursesContainer } from '@/shared/components/layout'
+
+export async function getStaticPaths() {
+	const courses = await getCollection('courses')
+	return courses.map((course) => ({
+		params: { slug: course.id },
+		props: { course }
+	}))
+}
+
+const { course } = Astro.props;
+const { Content } = await render(course);
+---
+
+<MainLayout title={course.data.title}>
+	<MainContainer>
+		<CoursesContainer
+			data={course.data}
+		>
+			<Content />
+		</CoursesContainer>
+	</MainContainer>
+</MainLayout>

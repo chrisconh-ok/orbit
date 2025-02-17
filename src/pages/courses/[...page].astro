@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content'
+import type { CollectionEntry } from 'astro:content'
+import type { GetStaticPathsOptions, Page } from 'astro'
+import CoursesPage from '@domain/courses/CoursesPage'
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+	try {
+		const allCourses: CollectionEntry<'courses'>[] = await getCollection('courses')
+		const courses = allCourses
+		const sortedCourses = allCourses.sort(
+			(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+		)
+
+		const allTags = [...new Set(courses.flatMap((courses) => courses.data.tags || []))]
+        const tagCount = allTags.reduce(
+            (acc, tag) => {
+                acc[tag] = courses.filter((courses) => courses.data.tags?.includes(tag)).length
+                return acc
+            },
+            {} as Record<string, number>
+        )
+		const sortedTags = allTags.sort((a, b) => tagCount[b] - tagCount[a])
+
+		return paginate(sortedCourses, {
+			pageSize: 4,
+			props: { numberOfCourses: sortedCourses.length, tags: sortedTags, tagCount }
+
+		})
+
+	} catch (error) {
+		console.error('Error al obtener los cursos:', error)
+		return []
+	}
+}
+
+interface Props {
+	page: Page<CollectionEntry<'courses'>>
+	tags: string[]
+	tagCount: Record<string, number>
+}
+
+const { page, tags, tagCount } = Astro.props
+---
+
+
+<CoursesPage
+    page={page}
+    tags={tags}
+    tagCount={tagCount}
+/>
+

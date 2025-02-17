@@ -1,0 +1,34 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+    /** Post data or image URL */
+    data: CollectionEntry<'resources'>['data'] | string;
+    /** Optional title for alt text when using direct image URL */
+    title?: string;
+    /** Optional additional CSS classes for container */
+    class?: string;
+}
+
+const {
+    data,
+    title = '',
+    class: className = '',
+} = Astro.props;
+
+const image = typeof data === 'string' ? data : data.image;
+const altText = typeof data === 'string' ? title : data.title;
+
+const baseStyles = "flex justify-center overflow-hidden rounded-t-lg";
+const imgStyles = "object-cover w-full h-auto transition-transform duration-300 hover:scale-110";
+---
+
+{image && (
+    <div class:list={[baseStyles, className]}>
+        <img
+            src={image}
+            alt={altText}
+            class:list={[imgStyles]}
+        />
+    </div>
+)}

@@ -1,0 +1,18 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { CourseCard } from '@shared/components/cards'
+
+interface Props {
+    courses: CollectionEntry<'courses'>[];
+}
+
+const { courses } = Astro.props;
+---
+
+<div class="grid gap-8 lg:grid-cols-2">
+    {
+        courses.map((course) => (
+            <CourseCard course={course} />
+        ))
+    }
+</div>

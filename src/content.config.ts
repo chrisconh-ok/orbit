@@ -63,5 +63,6 @@ const socialLinksCollection = defineCollection({
 export const collections = {
   blog: blogCollection,
   resources: resourcesCollection,
+  courses: coursesCollection,
   social: socialLinksCollection
 };

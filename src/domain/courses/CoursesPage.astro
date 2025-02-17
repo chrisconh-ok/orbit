@@ -1,0 +1,24 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import type { Page } from 'astro'
+import MainLayout from '@layouts/MainLayout'
+import { MainContainer } from '@shared/components/layout'
+
+import { CoursesHeader, TagsWidget, CoursesGrid, Pagination } from './components'
+
+interface Props {
+    page: Page<CollectionEntry<'courses'>>
+    tags: string[]
+    tagCount: Record<string, number>
+}
+
+const { page, tags, tagCount } = Astro.props
+---
+<MainLayout title={`Cursos - Página ${page.currentPage}`}>
+    <MainContainer>
+        <CoursesHeader />
+        <TagsWidget tags={tags} tagCount={tagCount} />
+        <CoursesGrid courses={page.data} />
+        <Pagination page={page} />
+    </MainContainer>
+</MainLayout>

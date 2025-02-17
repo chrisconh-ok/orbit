@@ -1,0 +1,23 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import { CardCover, CardContainer, CardInfo, CardTitle, CardDescription, CardButton } from './components'
+
+
+
+interface Props {
+    course: CollectionEntry<'courses'>;
+}
+
+const { course } = Astro.props;
+---
+
+<CardContainer>
+    <CardCover data={course.data} slug={course.id} />
+    <div class="p-5">
+        <CardInfo course={course} />
+        <CardTitle title={course.data.title} slug={course.id} />
+        <CardDescription description={course.data.description} />
+        <CardButton slug={course.id} purchaseLink={course.data.purchaseLink} regularPrice={course.data.regularPrice}/>
+    </div>
+</CardContainer>

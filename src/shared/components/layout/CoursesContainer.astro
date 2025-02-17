@@ -1,0 +1,77 @@
+---
+import { Headline, Tag, Button } from '@shared/components/ui'
+import type { CollectionEntry } from 'astro:content';
+
+
+interface Props {
+	/** Course data */
+    data: CollectionEntry<'courses'>['data'];
+}
+
+const {
+	data
+} = Astro.props
+
+const { title, image, tags, pubDate, regularPrice, salePrice, purchaseLink } = data;
+
+// Formatear la fecha
+const formattedDate = new Date(pubDate).toLocaleDateString('es-ES', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric'
+})
+---
+
+<article
+	class="mx-auto w-full max-w-3xl pb-32"
+>
+	<!-- Button for back to the blog page -->
+	<Button class='mb-8' href='/courses' text="Volver a los cursos" type='link' icon='mdi:arrow-left-thick' iconPosition='left' />
+	<!-- Article Header -->
+	<header class="mb-4 lg:mb-6 not-format">
+		<Headline type="h1">{title}</Headline>
+		<div
+			class="flex flex-wrap items-center justify-between gap-2 mb-6"
+		>
+			<div class="flex flex-wrap items-center gap-2">
+				<time class="text-theme-textMuted" datetime={pubDate.toISOString()}>
+					{formattedDate}
+				</time>
+			</div>
+			{
+				tags && (
+					<div class="flex flex-wrap gap-2 ml-4">
+						{tags.map((tag) => (
+							<Tag href={`/courses/tag/${tag}`} title={tag}>{tag}</Tag>
+						))}
+					</div>
+				)
+			}
+		</div>
+	</header>
+
+	<!-- Featured Image -->
+	{
+		image && (
+			<figure class="mb-8">
+				<img
+					src={image}
+					alt={title}
+					class="rounded-lg shadow-lg w-full h-auto"
+				/>
+			</figure>
+		)
+	}
+	<!-- Button to Download -->
+	<div class="flex flex-row items-center gap-4 mb-8 w-full h-auto">
+		<Button class='' href={purchaseLink} text="Obtener Ahora" type='primaryTurquoise' icon='mdi:shopping-cart' iconPosition='right' />
+		<span class="text-sm text-theme-textMuted">
+			{regularPrice === 0 ? 'Precio: Gratis' : `Precio: $${regularPrice}`}
+		</span>
+	</div>
+
+	<!-- Content -->
+	<div class="prose prose-invert prose-lg max-w-none text-theme-textPrimary">
+		<slot />
+	</div>
+</article>

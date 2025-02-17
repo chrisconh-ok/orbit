@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import CardDate from './CardDate.astro'
+import CardTags from './CardTags.astro'
+
+interface Props {
+    /** The v data */
+    course: CollectionEntry<'courses'>;
+}
+
+const { course } = Astro.props;
+---
+
+<div class="mb-4 flex flex-wrap gap-4 justify-between items-center">
+    <CardDate pubDate={course.data.pubDate} />
+    <CardTags tags={course.data.tags} />
+</div>
